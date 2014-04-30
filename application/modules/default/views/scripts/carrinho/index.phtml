@@ -1,0 +1,48 @@
+<h3>Carrinho de compras</h3>
+<div class="content-line"></div>
+<?php if (count($this->carrinho)): ?>
+
+    <form action="<?php echo $this->url(array('controller' => 'carrinho', 'action' => 'update', 'module' => 'default', null, 1)); ?>" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Remover</th>
+                    <th>Unitário</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->carrinho as $produto): ?>
+                <tr>
+                    <td><?php echo $this->escape($produto['produto']->getNome()); ?></td>
+                    <td><?php echo $this->formText('qtd[' . $this->escape($produto['produto']->getId()) . ']', $produto['qtd'], array('class' => 'input-p', 'style' => 'width: 30px')); ?></td>
+                    <td style="text-align: center">
+                        <a href="<?php echo $this->url(array('controller' => 'carrinho', 'action' => 'remove', 'module' => 'default', 'produto_id' => $produto['produto']->getId()), null, 1) ?>">
+                            <img src="<?php echo $this->baseUrl("/images/icons/remove.gif") ?>" alt="Remover">
+                        </a>
+                    </td>
+                    <td><?php echo Zend_Registry::get('currency')->toCurrency($produto['produto']->getValor()); ?></td>
+                    <td><?php echo Zend_Registry::get('currency')->toCurrency($produto['produto']->getValor() * $produto['qtd']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+                <tr>
+                    <td colspan="5" style="text-align: right;">
+                        <h3>Total:</b> <?php echo Zend_Registry::get('currency')->toCurrency($this->total); ?></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <input type="image" src="<?php echo $this->baseUrl("/images/icons/atualizar.gif") ?>" value="Atualizar">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <br>
+    <div class="content-line"></div>
+    <div class="btnCheckout"><a href="<?php echo $this->url(array('controller' => 'checkout', 'action' => 'index', 'module' => 'default')); ?>">Fechar compra</a></div>
+<?php else: ?>
+                    <center>O carrinho compras está vazio.</center>
+<?php endif; ?>

@@ -1,0 +1,57 @@
+<?php
+$auth = Zend_Auth::getInstance ();
+$auth->setStorage(new Zend_Auth_Storage_Session('default'));
+if (!$auth->hasIdentity()):
+?>
+    <h3>Indentificação</h3>
+
+<?php echo $this->form; ?>
+
+    <div class="clearfix"><br></div>
+
+    <h3>Castro de cliente</h3>
+<?php echo $this->formCliente; ?>
+
+<?php else: ?>
+        <h3>Confirmação dos dados</h3>
+        <div class="content-line"></div>
+<?php if (count($this->carrinho)): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qtd</th>
+                        <th>Unitário</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+        <?php foreach ($this->carrinho as $produto): ?>
+                <tr>
+                    <td><?php echo $this->escape($produto['produto']->getNome()); ?></td>
+                    <td>
+                <?php echo $this->escape($produto['qtd']); ?>
+            </td>
+
+            <td><?php echo Zend_Registry::get('currency')->toCurrency($produto['produto']->getValor()); ?></td>
+            <td><?php echo Zend_Registry::get('currency')->toCurrency($produto['produto']->getValor() * $produto['qtd']); ?></td>
+        </tr>
+        <?php endforeach; ?>
+                <tr>
+                    <td colspan="4" style="text-align: right;">
+                        <h3>Total:</b> <?php echo Zend_Registry::get('currency')->toCurrency($this->total); ?></h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form id="checkout" action="<?php echo $this->url(array('controller' => 'checkout', 'action' => 'finish'), null, 1); ?>" method="post">
+            <label for="frete">Forma de entrega: <?php echo $this->formSelect('frete', 'frete', null, array('Sedex' => 'Sedex', 'Sedex10' => 'Sedex 10')) ?></label>
+        </form>
+        <br>
+        <br>
+        <div class="content-line clearfix"></div>
+
+        <div class="btnCheckout"><a href="javascript: document.getElementById('checkout').submit();">Continuar</a></div>
+<?php endif; ?>
+<?php endif; ?>

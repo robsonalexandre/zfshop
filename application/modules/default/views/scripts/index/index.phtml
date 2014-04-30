@@ -1,0 +1,26 @@
+<h3>Home</h3>
+
+<div id="list-products">
+    <?php foreach ($this->produtos as $produto): ?>
+        <dl>
+            <dd>
+                <a href="<?php echo $this->url(array('controller' => 'produtos', 'action' => 'view', 'module' => 'default', 'id' => $produto->getId()), null, 1); ?>">
+                <?php if ($produto->hasImage()): ?>
+                    <img src="<?php echo $this->BaseUrl("/images/produtos/" . $produto->getId() . ".jpg") ?>" alt="<?php echo $this->escape($produto->getNome()) ?>">
+                <?php endif; ?>
+                </a>
+            </dd>
+            <dt>
+                <a href="<?php echo $this->url(array('controller' => 'produtos', 'action' => 'view', 'module' => 'default', 'id' => $produto->getId()), null, 1); ?>">
+                <?php echo $this->escape($produto->getNome()); ?>
+                </a>
+            <div class="valor">
+                Somente por: <?php echo $this->escape(Zend_Registry::get('currency')->toCurrency($produto->getValor())) ?>
+            </div>
+            </dt>
+
+        </dl>
+    <?php endforeach; ?>
+                    <div class="clearfix"></div>
+</div>
+<?php echo $this->paginationControl($this->produtos, 'Sliding', 'paginator.phtml'); ?>

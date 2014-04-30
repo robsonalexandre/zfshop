@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <nav>
+        <clientes>
+            <label>Clientes</label>
+            <controller>clientes</controller>
+            <action>index</action>
+            <module>admin</module>
+            <resource>admin:clientes</resource>
+            <privilege>index</privilege>
+        </clientes>
+
+         <pedidos>
+            <label>Pedidos</label>
+            <controller>pedidos</controller>
+            <action>index</action>
+            <module>admin</module>
+            <resource>admin:pedidos</resource>
+            <privilege>index</privilege>
+        </pedidos>
+
+        <produtos>
+            <label>Produtos</label>
+            <controller>produtos</controller>
+            <action>index</action>
+            <module>admin</module>
+            <resource>admin:produtos</resource>
+            <privilege>index</privilege>
+        </produtos>
+
+        <categorias>
+            <label>Categorias</label>
+            <controller>categorias</controller>
+            <action>index</action>
+            <module>admin</module>
+            <resource>admin:categorias</resource>
+            <privilege>index</privilege>
+            <pages>
+                <add>
+                    <label>Novo</label>
+                    <controller>categorias</controller>
+                    <action>add</action>
+                    <module>admin</module>
+                </add>
+                <edit>
+                    <label>Editar</label>
+                    <controller>categorias</controller>
+                    <action>edit</action>
+                    <module>admin</module>
+                </edit>
+            </pages>
+        </categorias>
+
+         <sair>
+            <label>Sair</label>
+            <controller>auth</controller>
+            <action>logout</action>
+            <module>admin</module>
+            <resource>admin:auth</resource>
+            <privilege>logout</privilege>
+        </sair>
+
+    </nav>
+</config>
